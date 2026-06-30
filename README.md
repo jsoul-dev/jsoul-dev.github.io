@@ -1,4 +1,4 @@
-# Personal GitHub Profile
+# 🩸 Jsoul
 
 > A dark, neon-infused, Berserk-themed personal profile page built with HTML, CSS, and Vanilla JavaScript.
 

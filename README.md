@@ -2,23 +2,8 @@
 
 > A dark, neon-infused, Berserk-themed personal profile page built with HTML, CSS, and Vanilla JavaScript.
 
-## Project Structure
-```text
-.
-├── assets/
-│   ├── css/
-│   │   └── style.css          # Main stylesheet
-│   ├── img/
-│   │   ├── berserk.jpg        # Background wallpaper
-│   │   ├── favicon.svg        # Site favicon
-│   │   └── guts.jpg           # Profile avatar
-│   ├── js/
-│   │   └── main.js            # Interactivity and animations
-│   └── media/
-│       └── gats.m4a           # Background audio
-├── README.md                  # Project documentation
-└── index.html                 # Main HTML structure
-```
+## Preview
+![Preview](.github/assets/screenshot.png)
 
 ## Built With
 - **HTML5**: Semantic structure and layout.

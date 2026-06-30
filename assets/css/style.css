@@ -117,6 +117,7 @@ body {
 .now-playing.visible {
   opacity: 1;
   transform: translateY(0);
+  pointer-events: auto;
 }
 
 .now-playing .music-note {

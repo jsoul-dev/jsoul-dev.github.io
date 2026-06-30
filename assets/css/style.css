@@ -147,6 +147,15 @@ body {
   font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.now-playing-text .repeat-icon {
+  color: var(--neon-red);
+  opacity: 0.8;
+  margin-top: 1px;
 }
 
 /* Audio Control Container */

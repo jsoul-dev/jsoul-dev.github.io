@@ -16,8 +16,8 @@
 │   │   └── main.js            # Interactivity and animations
 │   └── media/
 │       └── gats.m4a           # Background audio
-├── index.html                 # Main HTML structure
-└── README.md                  # Project documentation
+├── README.md                  # Project documentation
+└── index.html                 # Main HTML structure
 ```
 
 ## Built With

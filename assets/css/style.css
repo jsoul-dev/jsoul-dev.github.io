@@ -69,6 +69,8 @@ body {
   z-index: -1;
   pointer-events: none;
   opacity: 0.6;
+  transform: translateZ(0);
+  will-change: transform;
 }
 
 .manga-bg {
@@ -82,6 +84,8 @@ body {
   background-position: center;
   filter: blur(4px) brightness(0.35);
   z-index: -2;
+  transform: translateZ(0);
+  will-change: filter, transform;
 }
 
 .manga-vignette {

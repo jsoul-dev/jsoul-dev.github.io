@@ -192,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
       width = canvas.width = window.innerWidth;
       height = canvas.height = window.innerHeight;
       drops = [];
-      const dropCount = Math.floor(width / 3); // density
+      const dropCount = Math.floor(width / 6); // Reduced density to save CPU
       for (let i = 0; i < dropCount; i++) {
         drops.push({
           x: Math.random() * width,

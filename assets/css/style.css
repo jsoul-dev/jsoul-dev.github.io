@@ -187,7 +187,7 @@ body {
   transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
 }
 
-.audio-controls:hover .volume-slider-wrapper {
+.audio-controls.is-playing:hover .volume-slider-wrapper {
   opacity: 1;
   pointer-events: auto;
   transform: translateX(-50%) translateY(0);
@@ -221,7 +221,7 @@ input[type=range] {
   transform-origin: center;
 }
 
-.audio-controls:hover input[type=range]:hover {
+.audio-controls.is-playing:hover input[type=range]:hover {
   opacity: 1;
 }
 

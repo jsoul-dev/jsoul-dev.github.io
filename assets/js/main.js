@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const iconUnmuted = document.getElementById('icon-unmuted');
   const volumeSlider = document.getElementById('volume-slider');
   const nowPlaying = document.getElementById('now-playing');
+  const audioControls = document.querySelector('.audio-controls');
   const enterOverlay = document.getElementById('enter-overlay');
 
   const FADE_DURATION = 2000; // 2 seconds fade
@@ -26,18 +27,19 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     if (isPlaying && !fadeInterval) {
       audio.volume = val;
-      
-      if (val === 0) {
-        audio.pause();
-        if (nowPlaying) nowPlaying.classList.remove('visible');
-        iconUnmuted.classList.add('hidden');
-        iconMuted.classList.remove('hidden');
-      } else {
-        if (audio.paused) audio.play();
-        if (nowPlaying) nowPlaying.classList.add('visible');
-        iconMuted.classList.add('hidden');
-        iconUnmuted.classList.remove('hidden');
-      }
+        if (val === 0) {
+          audio.pause();
+          if (nowPlaying) nowPlaying.classList.remove('visible');
+          if (audioControls) audioControls.classList.remove('is-playing');
+          iconUnmuted.classList.add('hidden');
+          iconMuted.classList.remove('hidden');
+        } else {
+          if (audio.paused) audio.play();
+          if (nowPlaying) nowPlaying.classList.add('visible');
+          if (audioControls) audioControls.classList.add('is-playing');
+          iconMuted.classList.add('hidden');
+          iconUnmuted.classList.remove('hidden');
+        }
     }
   });
 
@@ -78,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
       iconUnmuted.classList.remove('hidden');
       audio.volume = parseFloat(volumeSlider.value);
       if (nowPlaying) nowPlaying.classList.add('visible');
+      if (audioControls) audioControls.classList.add('is-playing');
     }).catch(err => {
       console.error("Audio playback failed:", err);
     });
@@ -90,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
     audio.volume = 0;
     audio.pause();
     if (nowPlaying) nowPlaying.classList.remove('visible');
+    if (audioControls) audioControls.classList.remove('is-playing');
   }
 
   // Handle enter overlay

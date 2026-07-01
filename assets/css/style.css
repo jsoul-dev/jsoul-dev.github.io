@@ -347,6 +347,8 @@ body:not(.loaded) .links-container .link-item {
   opacity: 0.3;
   filter: drop-shadow(0 0 10px var(--neon-red));
   animation: glowPulse 4s infinite alternate var(--ease-out);
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 /* Fast, bright bleed is hidden by default and transitions out smoothly */
@@ -354,6 +356,8 @@ body:not(.loaded) .links-container .link-item {
   opacity: 0;
   animation: bleedFast 0.3s infinite alternate ease-in-out;
   transition: opacity 1.5s ease-out;
+  will-change: opacity;
+  transform: translateZ(0);
 }
 
 /* Invisible solid background to guarantee a 100% solid hit area */
@@ -442,13 +446,14 @@ body.loaded .profile-header {
   left: 50%;
   width: 100%;
   height: 100%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) translateZ(0);
   background: var(--neon-red);
   filter: blur(48px);
   opacity: 0.5;
   z-index: 1;
   border-radius: 50%;
   transition: opacity 400ms var(--ease-out);
+  will-change: transform, opacity;
 }
 
 .avatar-wrapper:hover .avatar {

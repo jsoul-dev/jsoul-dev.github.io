@@ -270,6 +270,8 @@ input[type=range]::-moz-range-thumb {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: relative;
+  z-index: 2;
   transition: transform 160ms var(--ease-out), box-shadow 200ms var(--ease-out), background 200ms var(--ease-out);
 }
 

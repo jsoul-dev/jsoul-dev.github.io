@@ -17,6 +17,7 @@ body {
   color: var(--text-primary);
   font-family: 'Inter', -apple-system, sans-serif;
   min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -595,6 +596,7 @@ body.loaded .link-item:nth-child(3) { animation-delay: 220ms; }
   .profile-container {
     gap: 1.5rem;
     padding: 1rem;
+    transform: translateY(-2rem); /* Visually center by offsetting the bottom UI */
   }
   .avatar-wrapper {
     width: 130px;

@@ -420,9 +420,22 @@ body.loaded .profile-header {
   height: 100vh;
   background: var(--neon-red);
   box-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red);
-  z-index: 1;
+  z-index: 3; /* Sit above the avatar border to prevent dark overlap */
   opacity: 0.6;
   transition: opacity 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
+}
+
+.neon-wire::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 9px;
+  height: 9px;
+  background: var(--neon-red);
+  border-radius: 50%;
+  box-shadow: 0 0 10px var(--neon-red);
 }
 
 .avatar {

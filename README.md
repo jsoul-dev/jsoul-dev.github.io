@@ -3,7 +3,7 @@
 > A dark, neon-infused, Berserk-themed personal profile page built with HTML, CSS, and Vanilla JavaScript.
 
 ## Preview
-![Preview](.github/assets/screenshot.png)
+![Preview](assets/img/screenshot.png)
 
 ## Built With
 - **HTML5**: Semantic structure and layout.

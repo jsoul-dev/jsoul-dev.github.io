@@ -413,16 +413,17 @@ body.loaded .profile-header {
 
 .neon-wire {
   position: absolute;
-  bottom: calc(100% - 3px);
+  bottom: 100%;
   left: 50%;
   transform: translateX(-50%);
   width: 3px;
   height: 100vh;
   background: var(--neon-red);
   box-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red);
-  z-index: 3;
+  z-index: 1;
   opacity: 0.6;
-  mix-blend-mode: screen;
+  border-bottom-left-radius: 2px;
+  border-bottom-right-radius: 2px;
   transition: opacity 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
 }
 

@@ -589,3 +589,44 @@ body.loaded .link-item:nth-child(3) { animation-delay: 220ms; }
     to { opacity: 1; }
   }
 }
+
+/* Mobile Optimizations for very short or narrow screens */
+@media (max-width: 480px), (max-height: 750px) {
+  .profile-container {
+    gap: 1.5rem;
+    padding: 1rem;
+  }
+  .avatar-wrapper {
+    width: 130px;
+    height: 130px;
+  }
+  .username {
+    font-size: 3.5rem;
+  }
+  .now-playing {
+    bottom: 1rem;
+    left: 1rem;
+    padding: 0.4rem 0.6rem;
+    max-width: calc(100vw - 90px);
+  }
+  .now-playing-text .song-title {
+    font-size: 0.75rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .audio-controls {
+    bottom: 1rem;
+    right: 1rem;
+  }
+  .brand-of-sacrifice {
+    width: 50px;
+    height: 65px;
+    top: 1rem;
+    right: 1rem;
+  }
+  .link-item {
+    width: 54px;
+    height: 54px;
+  }
+}

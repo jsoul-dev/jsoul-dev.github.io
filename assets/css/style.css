@@ -422,6 +422,8 @@ body.loaded .profile-header {
   box-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red);
   z-index: 1;
   opacity: 0.6;
+  -webkit-mask-image: linear-gradient(to bottom, black 70%, rgba(0, 0, 0, 0.5) 100%);
+  mask-image: linear-gradient(to bottom, black 70%, rgba(0, 0, 0, 0.5) 100%);
   transition: opacity 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
 }
 

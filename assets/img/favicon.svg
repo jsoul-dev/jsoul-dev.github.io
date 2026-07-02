@@ -1,0 +1,17 @@
+<svg viewBox="-20 -30 40 60" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="1.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  <!-- Main Glow Path -->
+  <path d="M 0,-22 L 0,22 M -3,-18 L 0,-24 L 3,-18 M 0,-2 L -16,-16 L -10,-22 M 0,-2 L 16,-16 L 10,-22 M 0,-5 L -16,10 L 0,22 L 16,10 Z" 
+        stroke="#ff1e1e" stroke-width="3" stroke-linejoin="miter" stroke-linecap="square" fill="none" filter="url(#glow)"/>
+  <!-- Core Highlight Path -->
+  <path d="M 0,-22 L 0,22 M -3,-18 L 0,-24 L 3,-18 M 0,-2 L -16,-16 L -10,-22 M 0,-2 L 16,-16 L 10,-22 M 0,-5 L -16,10 L 0,22 L 16,10 Z" 
+        stroke="#ffffff" stroke-width="1" stroke-linejoin="miter" stroke-linecap="square" fill="none" opacity="0.6"/>
+</svg>

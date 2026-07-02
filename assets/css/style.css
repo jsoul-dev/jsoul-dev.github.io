@@ -1,0 +1,570 @@
+:root {
+  --bg-color: #030303;
+  --text-primary: #FFFFFF;
+  --text-muted: #A1A1AA;
+  --neon-red: #ff1111;
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: 'Inter', -apple-system, sans-serif;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Enter Overlay */
+#enter-overlay {
+  position: fixed;
+  inset: 0;
+  background: #000;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: opacity 800ms var(--ease-out), visibility 800ms var(--ease-out);
+}
+
+#enter-overlay.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  cursor: default;
+  pointer-events: none;
+}
+
+.enter-text {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: var(--neon-red);
+  text-transform: uppercase;
+  animation: pulseText 2s infinite alternate var(--ease-out);
+}
+
+@keyframes pulseText {
+  from { opacity: 0.4; text-shadow: 0 0 5px var(--neon-red); }
+  to { opacity: 1; text-shadow: 0 0 20px var(--neon-red); }
+}
+
+/* Manga Background Elements */
+#rain-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.manga-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url('../img/berserk.jpg');
+  background-size: cover;
+  background-position: center;
+  filter: blur(4px) brightness(0.35);
+  z-index: -2;
+}
+
+.manga-vignette {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(circle, transparent 20%, #000 100%);
+  z-index: -1;
+}
+
+/* Now Playing */
+.now-playing {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(10, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 17, 17, 0.2);
+  z-index: 50;
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+  transition: opacity 400ms var(--ease-out), transform 400ms var(--ease-out);
+}
+
+.now-playing.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.now-playing .music-note {
+  color: var(--neon-red);
+  animation: floatNote 2s infinite ease-in-out alternate;
+}
+
+@keyframes floatNote {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-3px); }
+}
+
+.now-playing-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+}
+
+.now-playing-text .label {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--neon-red);
+  opacity: 0.8;
+}
+
+.now-playing-text .song-title {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+/* Audio Control Container */
+.audio-controls {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  width: 44px;
+  height: 44px;
+}
+
+.volume-slider-wrapper {
+  position: absolute;
+  bottom: calc(100% - 15px);
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  height: 150px;
+  width: 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms var(--ease-out), transform 300ms var(--ease-out);
+}
+
+.audio-controls:hover .volume-slider-wrapper {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.volume-percent {
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  position: absolute;
+  bottom: 115px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-shadow: 0 0 5px var(--neon-red);
+}
+
+/* Volume Slider */
+input[type=range] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 80px;
+  height: 14px;
+  background: transparent;
+  outline: none;
+  cursor: pointer;
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-90deg);
+  transform-origin: center;
+}
+
+.audio-controls:hover input[type=range]:hover {
+  opacity: 1;
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 17, 17, 0.3);
+  border-radius: 2px;
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background: var(--neon-red);
+  box-shadow: 0 0 8px var(--neon-red);
+  margin-top: -5px;
+}
+
+input[type=range]::-moz-range-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 17, 17, 0.3);
+  border-radius: 2px;
+}
+
+input[type=range]::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+  background: var(--neon-red);
+  box-shadow: 0 0 8px var(--neon-red);
+  border: none;
+}
+
+/* Audio Toggle Button */
+.audio-toggle {
+  background: rgba(255, 17, 17, 0.1);
+  border: 1px solid rgba(255, 17, 17, 0.3);
+  color: var(--neon-red);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition: transform 160ms var(--ease-out), box-shadow 200ms var(--ease-out), background 200ms var(--ease-out);
+}
+
+.audio-controls:hover .audio-toggle {
+  background: rgba(255, 17, 17, 0.2);
+  box-shadow: 0 0 16px rgba(255, 17, 17, 0.3);
+}
+
+.audio-toggle:hover {
+  transform: scale(1.05);
+}
+
+.audio-toggle:active {
+  transform: scale(0.95);
+}
+
+.audio-icon {
+  position: absolute;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+}
+
+.hidden {
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+}
+
+/* Profile Layout */
+.profile-container {
+  width: 100%;
+  max-width: 440px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 3rem;
+  position: relative;
+}
+
+/* Hide content initially to wait for enter */
+body:not(.loaded) .profile-header,
+body:not(.loaded) .links-container .link-item {
+  opacity: 0;
+  animation: none;
+}
+
+/* Brand of Sacrifice */
+.brand-of-sacrifice {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 80px;
+  height: 100px;
+  z-index: 100; /* Ensure it is above everything */
+  transition: transform 300ms var(--ease-out);
+}
+
+/* Base styles for both SVGs */
+.brand-of-sacrifice svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Let the div handle the hit box */
+}
+
+/* Slow, dim pulse runs constantly */
+.brand-slow {
+  opacity: 0.3;
+  filter: drop-shadow(0 0 10px var(--neon-red));
+  animation: glowPulse 4s infinite alternate var(--ease-out);
+}
+
+/* Fast, bright bleed is hidden by default and transitions out smoothly */
+.brand-fast {
+  opacity: 0;
+  animation: bleedFast 0.3s infinite alternate ease-in-out;
+  transition: opacity 1.5s ease-out;
+}
+
+/* Invisible solid background to guarantee a 100% solid hit area */
+.brand-of-sacrifice::before {
+  content: '';
+  position: absolute;
+  inset: -10px; /* Generous hit area */
+  background: rgba(0, 0, 0, 0.001); 
+  border-radius: 50%;
+}
+
+.brand-of-sacrifice:hover {
+  transform: scale(1.15) rotate(5deg);
+}
+
+/* On hover, fade the fast bleed in quickly */
+.brand-of-sacrifice:hover .brand-fast {
+  opacity: 1;
+  transition: opacity 0.2s ease-out;
+}
+
+@keyframes glowPulse {
+  from { opacity: 0.1; filter: drop-shadow(0 0 5px var(--neon-red)); }
+  to { opacity: 0.3; filter: drop-shadow(0 0 20px var(--neon-red)); }
+}
+
+@keyframes bleedFast {
+  from { filter: drop-shadow(0 0 20px var(--neon-red)) brightness(1.2); }
+  to { filter: drop-shadow(0 0 50px var(--neon-red)) brightness(2); }
+}
+
+/* Header & Avatar */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  position: relative;
+  transform: translateY(16px) scale(0.95);
+}
+
+body.loaded .profile-header {
+  animation: fadeIn 600ms var(--ease-out) forwards;
+}
+
+.avatar-wrapper {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 1rem;
+}
+
+.neon-wire {
+  position: absolute;
+  bottom: calc(100% - 3px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3px;
+  height: 100vh;
+  background: var(--neon-red);
+  box-shadow: 0 0 10px var(--neon-red), 0 0 20px var(--neon-red);
+  z-index: 1;
+  opacity: 0.6;
+  transition: opacity 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center calc(50% - 5px);
+  position: relative;
+  z-index: 2;
+  border: 3px solid rgba(255, 17, 17, 0.3);
+  transition: transform 400ms var(--ease-out), border-color 400ms var(--ease-out), box-shadow 400ms var(--ease-out);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.avatar-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  transform: translate(-50%, -50%);
+  background: var(--neon-red);
+  filter: blur(48px);
+  opacity: 0.5;
+  z-index: 1;
+  border-radius: 50%;
+  transition: opacity 400ms var(--ease-out);
+}
+
+.avatar-wrapper:hover .avatar {
+  border-color: rgba(255, 17, 17, 0.8);
+  box-shadow: 0 0 40px rgba(255, 17, 17, 0.6);
+}
+
+.avatar-wrapper:hover .neon-wire {
+  opacity: 1;
+  box-shadow: 0 0 15px var(--neon-red), 0 0 30px var(--neon-red);
+}
+
+.avatar-wrapper:hover .avatar-glow {
+  opacity: 0.8;
+  animation: heartbeatGlow 1.2s infinite alternate cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes heartbeatGlow {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  10% { transform: translate(-50%, -50%) scale(1.1); opacity: 0.8; }
+  20% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+  30% { transform: translate(-50%, -50%) scale(1.15); opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.6; }
+}
+
+.username {
+  font-family: 'Dancing Script', cursive;
+  font-size: 4.5rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 24px rgba(255, 17, 17, 0.4);
+  z-index: 2;
+  margin-top: -0.5rem;
+}
+
+/* Links (Icon Only, Row Layout) */
+.links-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 1.5rem;
+  width: 100%;
+  z-index: 2;
+}
+
+.link-item {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 64px;
+  height: 64px;
+  color: var(--text-primary);
+  text-decoration: none;
+  background: rgba(20, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 17, 17, 0.2);
+  border-radius: 50%;
+  outline: none;
+  overflow: hidden;
+  transition: transform 160ms var(--ease-out),
+              border-color 200ms var(--ease-out),
+              box-shadow 200ms var(--ease-out);
+  transform: translateY(16px) scale(0.95);
+}
+
+body.loaded .link-item {
+  animation: fadeIn 600ms var(--ease-out) forwards;
+}
+
+body.loaded .link-item:nth-child(1) { animation-delay: 100ms; }
+body.loaded .link-item:nth-child(2) { animation-delay: 160ms; }
+body.loaded .link-item:nth-child(3) { animation-delay: 220ms; }
+
+.link-icon {
+  position: relative;
+  z-index: 2;
+  color: var(--text-primary);
+  transition: filter 200ms ease;
+}
+
+.link-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 17, 17, 0.2) 0%, rgba(255, 17, 17, 0) 70%);
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 200ms var(--ease-out);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .link-item:hover {
+    border-color: rgba(255, 17, 17, 0.7);
+    box-shadow: 0 0 32px rgba(255, 17, 17, 0.25);
+    transform: translateY(-2px);
+  }
+  .link-item:hover .link-bg { opacity: 1; }
+}
+
+.link-item:active {
+  transform: scale(0.97);
+  box-shadow: 0 0 12px rgba(255, 17, 17, 0.4);
+}
+
+.link-item:active .link-icon {
+  filter: blur(1px);
+  opacity: 0.8;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-header, .link-item, .brand-of-sacrifice {
+    animation: fade 400ms ease forwards !important;
+    transform: none !important;
+  }
+  .link-item:active, .audio-toggle:hover, .audio-toggle:active {
+    transform: none;
+  }
+  .manga-bg {
+    animation: none;
+  }
+  @keyframes fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jsoul</title>
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+  <!-- Enter Overlay to bypass Autoplay restrictions -->
+  <div id="enter-overlay">
+    <span class="enter-text">Click to Enter</span>
+  </div>
+
+  <!-- Background Elements -->
+  <canvas id="rain-canvas"></canvas>
+  <div class="manga-bg"></div>
+  <div class="manga-vignette"></div>
+
+  <!-- Top Right Brand of Sacrifice -->
+  <div class="brand-of-sacrifice">
+    <svg class="brand-slow" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-slow">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <g transform="translate(50,60)">
+        <path d="M 0,-22 L 0,22 M -3,-18 L 0,-24 L 3,-18 M 0,-2 L -16,-16 L -10,-22 M 0,-2 L 16,-16 L 10,-22 M 0,-5 L -16,10 L 0,22 L 16,10 Z" 
+              stroke="var(--neon-red)" stroke-width="3" stroke-linejoin="miter" stroke-linecap="square" fill="none" filter="url(#glow-slow)"/>
+        <path d="M 0,-22 L 0,22 M -3,-18 L 0,-24 L 3,-18 M 0,-2 L -16,-16 L -10,-22 M 0,-2 L 16,-16 L 10,-22 M 0,-5 L -16,10 L 0,22 L 16,10 Z" 
+              stroke="#ffffff" stroke-width="1" stroke-linejoin="miter" stroke-linecap="square" fill="none" opacity="0.6"/>
+      </g>
+    </svg>
+    <svg class="brand-fast" viewBox="0 0 100 120" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <filter id="glow-fast">
+          <feGaussianBlur stdDeviation="2.5" result="blur"/>
+          <feMerge>
+            <feMergeNode in="blur"/>
+            <feMergeNode in="SourceGraphic"/>
+          </feMerge>
+        </filter>
+      </defs>
+      <g transform="translate(50,60)">
+        <path d="M 0,-22 L 0,22 M -3,-18 L 0,-24 L 3,-18 M 0,-2 L -16,-16 L -10,-22 M 0,-2 L 16,-16 L 10,-22 M 0,-5 L -16,10 L 0,22 L 16,10 Z" 
+              stroke="var(--neon-red)" stroke-width="3" stroke-linejoin="miter" stroke-linecap="square" fill="none" filter="url(#glow-fast)"/>
+        <path d="M 0,-22 L 0,22 M -3,-18 L 0,-24 L 3,-18 M 0,-2 L -16,-16 L -10,-22 M 0,-2 L 16,-16 L 10,-22 M 0,-5 L -16,10 L 0,22 L 16,10 Z" 
+              stroke="#ffffff" stroke-width="1" stroke-linejoin="miter" stroke-linecap="square" fill="none" opacity="0.6"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- Audio Element -->
+  <audio id="bg-audio" src="assets/media/gats.m4a" loop></audio>
+
+  <!-- Now Playing Display -->
+  <div class="now-playing" id="now-playing">
+    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="music-note">
+      <path d="M9 18V5l12-2v13"></path>
+      <circle cx="6" cy="18" r="3"></circle>
+      <circle cx="18" cy="16" r="3"></circle>
+    </svg>
+    <div class="now-playing-text">
+      <span class="label">Now Playing</span>
+      <span class="song-title">Gats - Susumu Hirasawa</span>
+    </div>
+  </div>
+
+  <!-- Audio Controls -->
+  <div class="audio-controls">
+    <div class="volume-slider-wrapper">
+      <span id="volume-percent" class="volume-percent">20%</span>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.2" aria-label="Volume">
+    </div>
+    <button id="audio-toggle" class="audio-toggle" aria-label="Toggle Audio">
+      <svg id="icon-unmuted" class="audio-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+        <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+      </svg>
+      <svg id="icon-muted" class="audio-icon hidden" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+        <line x1="16" y1="8" x2="16" y2="16"></line>
+        <line x1="20" y1="8" x2="20" y2="16"></line>
+      </svg>
+    </button>
+  </div>
+
+  <div class="profile-container">
+    <header class="profile-header">
+      <div class="avatar-wrapper">
+        <div class="neon-wire"></div>
+        <img src="assets/img/guts.jpg" alt="Jsoul Avatar" class="avatar">
+        <div class="avatar-glow"></div>
+      </div>
+      <h1 class="username">Jsoul</h1>
+    </header>
+
+    <nav class="links-container">
+      <a href="https://linkedin.com/in/johncarlolemence" class="link-item" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+          <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+          <rect x="2" y="9" width="4" height="12"></rect>
+          <circle cx="4" cy="4" r="2"></circle>
+        </svg>
+        <div class="link-bg"></div>
+      </a>
+
+      <a href="https://github.com/jsoul-dev" class="link-item" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="link-icon">
+          <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+        </svg>
+        <div class="link-bg"></div>
+      </a>
+      
+      <a href="https://steamcommunity.com/id/0xJsoul" class="link-item" target="_blank" rel="noopener noreferrer" aria-label="Steam">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 16 16" fill="currentColor" class="link-icon">
+          <path d="M.329 10.333A8.01 8.01 0 0 0 7.99 16C12.414 16 16 12.418 16 8s-3.586-8-8.009-8A8.006 8.006 0 0 0 0 7.468l.003.006 4.304 1.769A2.2 2.2 0 0 1 5.62 8.88l1.96-2.844-.001-.04a3.046 3.046 0 0 1 3.042-3.043 3.046 3.046 0 0 1 3.042 3.043 3.047 3.047 0 0 1-3.111 3.044l-2.804 2a2.223 2.223 0 0 1-3.075 2.11 2.22 2.22 0 0 1-1.312-1.568L.33 10.333Z"/>
+          <path d="M4.868 12.683a1.715 1.715 0 0 0 1.318-3.165 1.7 1.7 0 0 0-1.263-.02l1.023.424a1.261 1.261 0 1 1-.97 2.33l-.99-.41a1.7 1.7 0 0 0 .882.84Zm3.726-6.687a2.03 2.03 0 0 0 2.027 2.029 2.03 2.03 0 0 0 2.027-2.029 2.03 2.03 0 0 0-2.027-2.027 2.03 2.03 0 0 0-2.027 2.027m2.03-1.527a1.524 1.524 0 1 1-.002 3.048 1.524 1.524 0 0 1 .002-3.048"/>
+        </svg>
+        <div class="link-bg"></div>
+      </a>
+    </nav>
+  </div>
+
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

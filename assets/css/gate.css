@@ -1,0 +1,92 @@
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: var(--ink);
+  color: var(--ash);
+  font: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+.gate:focus-visible {
+  outline-offset: -10px;
+}
+.gate canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.gate-hint {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: max(1.5rem, env(safe-area-inset-bottom));
+  text-align: center;
+  font-size: 1.05rem;
+  opacity: 0;
+  animation: hint-in 700ms var(--ease) 1.4s forwards;
+}
+@keyframes hint-in {
+  to { opacity: 1; }
+}
+.gate.is-leaving {
+  visibility: hidden;
+}
+.no-js .gate {
+  display: none;
+}
+
+/* The slash that splits the gate in two when you enter */
+.cut {
+  position: fixed;
+  inset: 0;
+  z-index: 110;
+  overflow: hidden;
+  pointer-events: none;
+}
+.cut-half {
+  position: absolute;
+  left: -35%;
+  top: -35%;
+  width: 170%;
+  height: 170%;
+  background: var(--ink);
+  transform: rotate(var(--angle));
+  will-change: transform;
+}
+.cut-half.a { clip-path: inset(0 0 50% 0); }
+.cut-half.b { clip-path: inset(50% 0 0 0); }
+.cut-inner {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) rotate(10deg);
+}
+.cut-inner canvas {
+  display: block;
+}
+.cut-line {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 180vmax;
+  height: 2px;
+  margin: -1px 0 0 -90vmax;
+  background: var(--blood);
+  box-shadow: 0 0 14px var(--blood);
+  transform: rotate(var(--angle));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate-hint {
+    animation-duration: 1ms;
+    animation-delay: 0s;
+  }
+}

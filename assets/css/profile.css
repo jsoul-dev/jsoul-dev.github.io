@@ -1,0 +1,243 @@
+/* Backdrop: the Berserk panel, pre-darkened. The vignette keeps the
+   centre of the page the brightest area so the portrait reads first. */
+.backdrop {
+  position: fixed;
+  inset: -4%;
+  z-index: 0;
+  background: url("../images/backdrop.jpg") center / cover no-repeat;
+  will-change: transform;
+}
+.backdrop::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 45% 55%, transparent 15%, var(--ink) 95%);
+}
+
+.rain {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* Brand of Sacrifice: the one glowing element on the page. */
+.brand {
+  position: fixed;
+  top: max(1.25rem, env(safe-area-inset-top));
+  right: max(1.25rem, env(safe-area-inset-right));
+  z-index: 3;
+  width: 3.25rem;
+  height: 4.9rem;
+  filter: drop-shadow(0 0 10px var(--blood));
+  animation: pulse 5s ease-in-out infinite alternate;
+}
+.brand svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+@keyframes pulse {
+  from { opacity: 0.35; }
+  to { opacity: 0.95; }
+}
+
+.profile {
+  position: relative;
+  z-index: 2;
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: auto minmax(0, 26rem);
+  justify-content: center;
+  align-content: center;
+  align-items: end;
+  column-gap: clamp(2rem, 7vw, 6.5rem);
+  padding: var(--pad) var(--pad) calc(var(--dock-h) + var(--pad));
+  outline: none;
+}
+
+.portrait {
+  position: relative;
+  width: var(--pw);
+  aspect-ratio: 3 / 4;
+  margin: 0;
+}
+.plx {
+  display: block;
+  width: 100%;
+  height: 100%;
+  will-change: transform;
+}
+.portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 62% 30%;
+  clip-path: polygon(var(--s) 0, 100% 0, calc(100% - var(--s)) 100%, 0 100%);
+}
+/* The cut: a thin red slash parallel to the portrait's right edge. */
+.portrait::after {
+  content: "";
+  position: absolute;
+  inset: 0 -20px 0 0;
+  background: var(--blood);
+  clip-path: polygon(
+    calc(100% - 9px) 0,
+    calc(100% - 6px) 0,
+    calc(100% - 6px - var(--s)) 100%,
+    calc(100% - 9px - var(--s)) 100%
+  );
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.name {
+  margin: 0;
+  font-family: var(--serif);
+  font-style: normal;
+  font-weight: 400;
+  font-size: clamp(4.75rem, 13vw, 9.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.01em;
+}
+.name .plx {
+  display: inline-block;
+  height: auto;
+  width: auto;
+}
+
+.cut-mark {
+  display: block;
+  width: 6rem;
+  height: 3px;
+  margin: 1.7rem 0 1.5rem 0.4rem;
+  background: var(--blood);
+  transform: rotate(var(--angle));
+  transform-origin: left center;
+}
+
+.links {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+.links li {
+  border-bottom: 1px solid var(--line);
+}
+.links a {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-height: 4rem;
+  padding: 0 0.25rem;
+  color: var(--bone);
+  font-size: 1.6rem;
+  text-decoration: none;
+  transition: padding-left 220ms var(--ease);
+}
+.links a::before {
+  content: "";
+  position: absolute;
+  left: -14px;
+  top: 50%;
+  width: 3px;
+  height: 0;
+  background: var(--blood);
+  transform: translateY(-50%) skewX(10deg);
+  transition: height 200ms var(--ease);
+}
+.links a:focus-visible {
+  outline-offset: -2px;
+}
+.links a:focus-visible,
+.links a:active {
+  padding-left: 0.9rem;
+}
+.links a:focus-visible::before,
+.links a:active::before {
+  height: 62%;
+}
+@media (hover: hover) and (pointer: fine) {
+  .links a:hover {
+    padding-left: 0.9rem;
+  }
+  .links a:hover::before {
+    height: 62%;
+  }
+}
+
+.credit {
+  margin: 1.5rem 0 0;
+  color: var(--ash);
+  font-size: 0.95rem;
+}
+.credit span {
+  display: block;
+}
+
+/* Reveal after entering */
+.js .reveal {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.js .entered .reveal {
+  opacity: 1;
+  transform: none;
+  transition: opacity 700ms var(--ease), transform 700ms var(--ease);
+  transition-delay: calc(0.25s + var(--i, 0) * 90ms);
+}
+.js .cut-mark.reveal {
+  transform: rotate(var(--angle)) translateY(14px);
+}
+.js .entered .cut-mark.reveal {
+  transform: rotate(var(--angle));
+}
+.js .brand {
+  opacity: 0;
+}
+.js .entered .brand {
+  opacity: 1;
+}
+
+@media (max-width: 859px) {
+  :root {
+    --pw: min(62vw, 17rem, 36dvh);
+  }
+  .profile {
+    grid-template-columns: minmax(0, 26rem);
+    row-gap: 1.75rem;
+    align-content: start;
+    padding-top: calc(var(--pad) + 1rem);
+  }
+  .name {
+    font-size: clamp(4.25rem, 22vw, 6.5rem);
+  }
+  .brand {
+    width: 2.5rem;
+    height: 3.8rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand {
+    animation: none;
+    opacity: 0.8;
+  }
+  .js .entered .reveal {
+    transition-duration: 300ms;
+    transition-delay: 0s;
+  }
+  .links a,
+  .links a::before {
+    transition: none;
+  }
+}

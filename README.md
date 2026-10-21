@@ -1,5 +1,3 @@
-# Jsoul
-
 A dark, Berserk-themed personal profile page. Plain HTML, CSS and JavaScript (ES modules), no build step.
 
 ![Preview](docs/preview.png)

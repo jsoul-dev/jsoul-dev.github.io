@@ -1,4 +1,4 @@
-A dark, Berserk-themed personal profile page. Plain HTML, CSS and JavaScript (ES modules), no build step.
+<p align="center">A dark, Berserk-themed personal profile page. Plain HTML, CSS and JavaScript (ES modules), no build step.</p>
 
 ![Preview](docs/preview.png)
 
